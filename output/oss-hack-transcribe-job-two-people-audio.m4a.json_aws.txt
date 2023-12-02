@@ -1,0 +1,7 @@
+{"speaker": "speaker_6", "speech": "Hi my name is Patrick and I'm with Rama Hi Rama Say something", "time_spoken": "4.839"}
+{"speaker": "speaker_5", "speech": "I oh sorry Hi Hello Um let's have a meeting tomorrow Bye", "time_spoken": "2.960"}
+{"speaker": "speaker_6", "speech": "bye bye already", "time_spoken": "1.071"}
+{"speaker": "speaker_5", "speech": "No let's let's stay and talk for a little longer", "time_spoken": "2.280"}
+{"speaker": "speaker_6", "speech": "I like cows What's your favorite animal", "time_spoken": "2.301"}
+{"speaker": "speaker_5", "speech": "I like um", "time_spoken": "1.150"}
+{"speaker": "speaker_6", "speech": "cats She likes cats guys All right See you later Bye", "time_spoken": "2.900"}
