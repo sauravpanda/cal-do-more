@@ -1,4 +1,4 @@
-from llm import make_oai_call
+from services.llm import make_oai_call
 
 CATEGORIES = [
     "Event Planning and Coordination",
