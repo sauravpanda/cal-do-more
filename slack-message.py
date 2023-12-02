@@ -18,17 +18,17 @@ payload = {
             "actions": [
                 {
                     "name": "answer",
-                    "text": "Yes",
+                    "text": "You open a new event",
                     "type": "button",
                     "value": "Create a new event",
-                    "url": "https://app.cal.com/event-types?dialog=new&eventPage=parthit-music-klhypg"  # Replace with your actual URL
+                    "url": "http://127.0.0.1:5000/response?data=yes"  # Replace with your actual URL
                 },
                 {
                     "name": "answer",
-                    "text": "No",
+                    "text": "Should take you from slack to browser",
                     "type": "button",
                     "value": "no",
-                    "url": "http://127.0.0.1:5000/response"  # Replace with your actual URL
+                    "url": "http://127.0.0.1:5000/response?data=no"
                 }
             ]
         }
