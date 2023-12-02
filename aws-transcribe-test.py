@@ -146,3 +146,17 @@ if current_speaker is not None:
 
 for result in result_list:
     print(result)
+
+output_folder = './output'
+if not os.path.exists(output_folder):
+    os.makedirs(output_folder)
+
+# Define the output file path
+output_file_path = os.path.join(output_folder, object_key+'_aws.txt')
+
+# Write the result_list to the text file
+with open(output_file_path, 'w') as output_file:
+    for result in result_list:
+        output_file.write(json.dumps(result) + '\n')
+
+print(f"Results saved to: {output_file_path}")

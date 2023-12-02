@@ -12,11 +12,6 @@ load_dotenv()
 org_var = os.getenv("ORG_VAR")
 openai_api_key = os.getenv("OPENAI_API_KEY")
 
-# Use the variables in your code
-print(f"Database URL: {org_var}")
-print(f"API Key: {openai_api_key}")
-
-
 # Set your AWS credentials (replace 'your_access_key' and 'your_secret_key' with your actual credentials)
 aws_access_key = os.getenv("AWS_ACCESS_KEY")
 aws_secret_key = os.getenv("AWS_SECRET_KEY")
@@ -46,4 +41,20 @@ transcript = client.audio.transcriptions.create(
   file=audio_file
 )
 
-print(transcript)
+print(transcript.text)
+
+import os
+
+# Ensure the 'output' folder exists
+output_folder = 'output'
+if not os.path.exists(output_folder):
+    os.makedirs(output_folder)
+
+# Define the output file path
+output_file_path = os.path.join(output_folder, object_key+'_whisper.txt')
+
+# Write the transcript text to the text file
+with open(output_file_path, 'w') as output_file:
+    output_file.write(transcript.text)
+
+print(f"Transcription output saved to: {output_file_path}")
