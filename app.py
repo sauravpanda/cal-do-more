@@ -1,10 +1,12 @@
-from flask import Flask
+from flask import Flask, request
 
 app = Flask(__name__)
 
 @app.route('/response')
-def parthit():
-    return 'Parthit!'
+def slack_hook():
+    data = request.args.get('data')
+    return f'Button clicked! Value: {data}'
+
 
 @app.route('/')
 def hello():
