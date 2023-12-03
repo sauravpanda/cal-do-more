@@ -123,9 +123,12 @@ In `Trigger Configuration`, select `S3` as the source and add the information ab
 This will be necessary to hit the transcription endpoint on video upload triggers.
 
 ## FUTURE WORK
+- Make Prompts more focused to get exact events and ensure we dont miss info
 - Add authentication
 - Check for cal.com availability and provide prefer times.
 - Connect with daily video conferencing used by cal.
 - Add meeting analysis like time spent on different topics.
+- Add support to whisper for people who dont want to work with aws transcript
 - Automatically fetch the cal team and select the participants for the call.
 - Synchronize slack assistant events to avoid duplication actions
+- Add support to whisper for people who dont want to work with aws transcript

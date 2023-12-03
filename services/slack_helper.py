@@ -26,14 +26,14 @@ CREATE_EVENT_PL = '''{
             "type": "button",
             "text": {"type": "plain_text", "text": "Create Event", "emoji": true},
             "value": "yes",
-            "url": "http://127.0.0.1:5000/response?data=yes&type=event&{pl_data}",
+            "url": "{host}/response?data=yes&type=event&{pl_data}",
             "action_id": "actionId-0"
         },
         {
             "type": "button",
             "text": {"type": "plain_text", "text": "No Need", "emoji": true},
             "value": "no",
-            "url": "http://127.0.0.1:5000/response?data=no&type=event&{pl_data}",
+            "url": "{host}/response?data=no&type=event&{pl_data}",
             "action_id": "actionId-2"
         }
     ]
@@ -46,14 +46,14 @@ CREATE_ISSUE_PL = '''{
             "type": "button",
             "text": {"type": "plain_text", "text": "Create", "emoji": true},
             "value": "yes",
-            "url": "http://127.0.0.1:5000/response?data=yes&type=issue&{pl_data}",
+            "url": "{host}/response?data=yes&type=issue&{pl_data}",
             "action_id": "actionId-0"
         },
         {
             "type": "button",
             "text": {"type": "plain_text", "text": "No Need", "emoji": true},
             "value": "no",
-            "url": "http://127.0.0.1:5000/response?data=no&type=issue&{pl_data}",
+            "url": "{host}/response?data=no&type=issue&{pl_data}",
             "action_id": "actionId-2"
         }
     ]
@@ -113,8 +113,9 @@ def get_user_approval(info):
             dt=info["question"] + "?"
         )
         setup = SETUP_EVENT.replace('{username}', os.environ["CAL_USERNAME"])
+        setup = setup.replace("{host}", os.environ.get("HOST_URL", "http://localhost:5000"))
         pl = {"blocks": [ctx, json.loads(setup)]}
-        print(json.dumps(pl))
+        # print(json.dumps(pl))
         send_webhook(pl)
 
     else:
@@ -130,8 +131,9 @@ def get_user_approval(info):
         pl_event = CREATE_EVENT_PL.replace(
             "{pl_data}",
             f"time={dt.strftime('%Y-%m-%dT%H:%M:%S.000Z')}&summary={requests.utils.quote(td['summary'])}")
+        pl_event = pl_event.replace("{host}", os.environ.get("HOST_URL", "http://localhost:5000"))
         pl = {"blocks": [ctx, json.loads(pl_event)]}
-        print(json.dumps(pl))
+        # print(json.dumps(pl))
         send_webhook(pl)
 
 

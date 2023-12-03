@@ -54,7 +54,6 @@ def transcribe_video(bucket_name, object_key):
         # Download and print the transcription results
         transcription_results = s3.get_object(Bucket=output_json_bucket, Key=out_object_key)
         transcription_text = transcription_results["Body"].read().decode("utf-8")
-        print("Transcription Results:\n", transcription_text, "\n")
     else:
         print(f"Transcription job failed with status: {status}")
 
