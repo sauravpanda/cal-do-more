@@ -1,4 +1,5 @@
 from services.llm import make_oai_call
+from services.slack_helper import get_user_approval
 
 CATEGORIES = [
     "Future Meeting",
@@ -22,6 +23,16 @@ MEETING_RELATED_CAT = [
     "Customer and Client Focus",
 ]
 
+ISSUE_RELATED_CAT = [
+    "Product Development",
+    "Training Session",
+    "Github Issues",
+    "Problem-Solving Sessions",
+    "Quality Assurance",
+    "Feedback and Open Forums",
+    "Research and Development",
+]
+
 
 def check_if_cal_event_needed(text):
     prompt = f"""
@@ -29,6 +40,19 @@ def check_if_cal_event_needed(text):
         Answer in json format and only return true or false.
         Your output should look like:
         OUTPUT: {{"create_event": true}}
+
+        TEXT: {text}
+    """
+    res = make_oai_call(prompt)
+    return res
+
+
+def check_github_issue_needed(text):
+    prompt = f"""
+        For given text check if we need to create a Github issue.
+        Answer in json format and only return true or false.
+        Your output should look like:
+        OUTPUT: {{"create_issue": true}}
 
         TEXT: {text}
     """
@@ -57,6 +81,28 @@ def get_event_info(text):
         OUTPUT: {{"template_data": <TEMPLATE_DATA>, "question": "<question>"}}
 
 
+    """
+    res = make_oai_call(prompt)
+    return res
+
+
+def get_issue_info(text):
+    prompt = f"""
+        For given text try to fill the following template.
+        If you dont find some info, create a follow up question for that sepcific info
+        All output should be in json format.
+        Prefer asking questions over guessing answers to template.
+        If you dont know the values, fill it as "TBD"
+
+        TEXT: {text}
+
+        TEMPLATE: {{
+            "title": "",
+            "description": ""
+        }}
+
+        Your output should look like:
+        OUTPUT: {{"template_data": <TEMPLATE_DATA>}}
     """
     res = make_oai_call(prompt)
     return res
@@ -95,10 +141,14 @@ def segregate_tasks(results):
             r = check_if_cal_event_needed(res["para"])
             if r["create_event"]:
                 info = get_event_info(res["para"])
-                info
+                get_user_approval(info)
                 # Send a slack ping for this task
+        elif res["category"] in ISSUE_RELATED_CAT:
+            r = check_github_issue_needed(res["para"])
+            if r["create_event"]:
+                info = get_issue_info(res["para"])
+                # get_user_approval(info)
 
-    pass
 
 
 def cal_event():
@@ -131,12 +181,18 @@ if __name__ == "__main__":
     #     """
     #     )
     # print("res: ", res)
-    print(
-        get_event_info(
-            "And next week, we also have a conference coming up. \
-            So we need to talk to a few more customers. And we need to \
-            identify who the potential customers might be. So maybe let's sit \
-            on Monday and try to finalize who are the potential customers. \
-            And schedule calls with them."
-        )
-    )
+    # print(
+    #     get_event_info(
+    #         "And next week, we also have a conference coming up. \
+    #         So we need to talk to a few more customers. And we need to \
+    #         identify who the potential customers might be. So maybe let's sit \
+    #         on Monday and try to finalize who are the potential customers. \
+    #         And schedule calls with them."
+    #     )
+    # )
+
+    print(get_issue_info("And next week, we also have a conference coming up. \
+             So we need to talk to a few more customers. And we need to \
+             identify who the potential customers might be. So maybe let's sit \
+             on Monday and try to finalize who are the potential customers. \
+             And schedule calls with them."))

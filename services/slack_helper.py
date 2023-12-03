@@ -1,16 +1,17 @@
 import os
 import requests
 import dateparser
+import json
 
 CONTEXT_PL = {
     "type": "section",
     "text": {
         "type": "mrkdwn",
-        "text": "**Potential Meeting:** \n Desc: {text} \n When: {dt}",
+        "text": "**Potential Meeting:** \n Desc: {text} \n {dt}",
     },
 }
 
-YES_NO_PL = {
+CREATE_EVENT_PL = {
     "type": "actions",
     "elements": [
         {
@@ -29,6 +30,19 @@ YES_NO_PL = {
         },
     ],
 }
+
+SETUP_EVENT = '''{
+    "type": "actions",
+    "elements": [
+        {
+            "type": "button",
+            "text": {"type": "plain_text", "text": "Setup Cal Event Manually", "emoji": true},
+            "value": "yes",
+            "url": "https://cal.com/{username}/30min?notes={notes}&date=2023-12-04&month=2023-12",
+            "action_id": "actionId-0"
+        }
+    ]
+}'''
 
 QUESTION_PL = {}
 
@@ -64,16 +78,28 @@ def get_dt_str(td):
 def get_user_approval(info):
     if info["question"]:
         # Ask a question to user
-        pass
+        td = info["template_data"]
+        ctx = CONTEXT_PL
+        ctx["text"]["text"] = ctx["text"]["text"].format(
+            text=td["summary"],
+            dt= info["question"] + "?"
+        )
+        setup = SETUP_EVENT.replace('{username}', os.environ["CAL_USERNAME"])
+        pl = {"blocks": [ctx, json.loads(setup)]}
+        print(json.dumps(pl))
+        send_webhook(pl)
+        
     else:
         # Ask for approval
-        info = info["template_data"]
-        dt_str = get_dt_str(info)
+        td = info["template_data"]
+        dt_str = get_dt_str(td)
         dt = dateparser.parse(dt_str, languages=["en"])
+        ctx = CONTEXT_PL
         ctx["text"]["text"] = ctx["text"]["text"].format(
-            text=td["summary"], dt=dt.strftime("%Y-%m-%dT%H:%M:%S.000Z")
+            text=td["summary"],
+            dt="When: " + dt.strftime("%Y-%m-%dT%H:%M:%S.000Z")
         )
-        pl = {"blocks": [ctx, YES_NO_PL]}
+        pl = {"blocks": [ctx, CREATE_EVENT_PL]}
         send_webhook(pl)
 
 
@@ -88,13 +114,25 @@ if __name__ == "__main__":
         "question": "What is the specific date and time for the meeting next week to finalize potential customers?",
     }
 
-    temp_pl = []
-    ctx = CONTEXT_PL
-    td = dl["template_data"]
+    # dl = {
+    #     "template_data": {
+    #         "date": "TBD",
+    #         "time": "10:00 am",
+    #         "relative_date": "Monday",
+    #         "summary": "Identify potential customers and schedule calls with them",
+    #     },
+    #     "question": "",
+    # }
+
+    # temp_pl = []
+    # ctx = CONTEXT_PL
+    # td = dl["template_data"]
+    get_user_approval(dl)
 
     # dt = dateparser.parse(dt_str, languages=["en"])
     # ctx["text"]["text"] = ctx["text"]["text"].format(
     #     text=td["summary"], dt=dt.strftime("%Y-%m-%dT%H:%M:%S.000Z")
     # )
     # pl = {"blocks": [ctx, YES_NO_PL]}
+    # send_webhook(pl)
     # send_webhook(pl)
