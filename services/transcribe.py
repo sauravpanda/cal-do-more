@@ -27,7 +27,7 @@ def transcribe_video(bucket_name, object_key):
         OutputBucketName=output_json_bucket,  # You can specify a different bucket for transcribe output
         Settings={
             'ShowSpeakerLabels': True,
-            'MaxSpeakerLabels': 2
+            'MaxSpeakerLabels': 4
         }
     )
 
