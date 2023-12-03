@@ -1,11 +1,8 @@
 from github import Github
 from github import Auth
 import os
-from dotenv import load_dotenv
 
-load_dotenv()
-
-access_token = os.environ.get("ACCESS_TOKEN")
+access_token = os.environ.get("GITHUB_PAT_TOKEN")
 auth = Auth.Token(access_token)
 
 g = Github(auth=auth)

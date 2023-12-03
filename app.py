@@ -4,6 +4,7 @@ from services.transcribe import transcribe_video, process_transcriptions
 from services.whisper import whisper_video
 from services.extract_info import get_topics, segregate_tasks
 from services.cal import create_booking
+from services.git_helper import create_github_issue
 import traceback
 app = Flask(__name__)
 
@@ -45,6 +46,7 @@ def slack_hook():
     if data == "yes" and eventType == "issue":
         title = request.args.get("title")
         desc = request.args.get("")
+        create_github_issue(title, desc)
         RESP = "Added Github Issue"
         print(title, desc)
     elif data == "yes" and eventType == "event":

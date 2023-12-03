@@ -84,7 +84,7 @@ def get_event_info(text):
 
 
     """
-    res = json.loads(make_oai_call(prompt))
+    res = json.loads(make_oai_call(prompt, model="gpt-4-turbo"))
     return res
 
 
@@ -108,7 +108,7 @@ def get_issue_info(text):
         Your output should look like:
         OUTPUT: {{"template_data": <TEMPLATE_DATA>}}
     """
-    res = json.loads(make_oai_call(prompt))
+    res = json.loads(make_oai_call(prompt, model="gpt-4-turbo"))
     return res
 
 
