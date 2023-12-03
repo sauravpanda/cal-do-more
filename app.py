@@ -19,10 +19,10 @@ def cal_transcribe():
             transcription_data = transcribe_video(bucket_name, object_key)
             transcripts = process_transcriptions(transcription_data)
             results = get_topics(transcripts)
-            res = segregate_tasks(results)
+            segregate_tasks(results)
             RESP = "Successfully transcribed"
-        except:
-            print(traceback.format_exc())
+        except Exception as e:
+            print(e, traceback.format_exc())
             RESP = "Failed to transcribed"
     return RESP
 
@@ -42,17 +42,18 @@ def slack_hook():
     RESP = "Failed to Process"
     data = request.args.get("data")
     eventType = request.args.get("type")
-    if eventType == "issue":
+    if data == "yes" and eventType == "issue":
         title = request.args.get("title")
         desc = request.args.get("")
-    elif eventType == "event":
+        RESP = "Added Github Issue"
+        print(title, desc)
+    elif data == "yes" and eventType == "event":
         summary = request.args.get("summary", "")
         dt = request.args.get("time")
         create_booking(dt, desc=summary)
+        RESP = "Added Cal booking"
 
-        
-
-    return f"Button clicked! Value: {data}"
+    return RESP
 
 
 @app.route("/")

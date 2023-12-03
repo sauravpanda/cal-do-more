@@ -143,8 +143,9 @@ def get_user_approval_for_github(info):
         text=td["title"],
         dt=td["description"]
     )
-    setup = CREATE_ISSUE_PL.replace('{pl_data}',
-            f'title={requests.utils.quote(td["title"])}&desc={requests.utils.quote(td["description"])}')
+    setup = CREATE_ISSUE_PL.replace(
+        '{pl_data}',
+        f'title={requests.utils.quote(td["title"])}&desc={requests.utils.quote(td["description"])}')
     pl = {"blocks": [ctx, json.loads(setup)]}
     send_webhook(pl)
 

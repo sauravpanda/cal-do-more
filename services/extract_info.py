@@ -103,6 +103,8 @@ def get_issue_info(text):
             "description": ""
         }}
 
+        For description, try to write in third person without using names.
+
         Your output should look like:
         OUTPUT: {{"template_data": <TEMPLATE_DATA>}}
     """
