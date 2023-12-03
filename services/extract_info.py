@@ -4,14 +4,14 @@ import json
 CATEGORIES = [
     "Future Meeting",
     "Github Issues",
-    "Problem-Solving Sessions",
-    "Training Session",
+    # "Problem-Solving Sessions",
+    # "Training Session",
     "Product Development",
     "Customer and Client Focus",
-    "Quality Assurance",
+    # "Quality Assurance",
     "Casual Conversation",
-    "Feedback and Open Forums",
-    "Research and Development",
+    # "Feedback and Open Forums",
+    # "Research and Development",
 ]
 
 ACTIONS = ["SETUP A MEETING", "SETUP REMINDER", "Create an ISSUE", "OTHER"]
@@ -25,12 +25,12 @@ MEETING_RELATED_CAT = [
 
 ISSUE_RELATED_CAT = [
     "Product Development",
-    "Training Session",
+    # "Training Session",
     "Github Issues",
     "Problem-Solving Sessions",
     "Quality Assurance",
-    "Feedback and Open Forums",
-    "Research and Development",
+    # "Feedback and Open Forums",
+    # "Research and Development",
 ]
 
 
@@ -65,7 +65,7 @@ def get_event_info(text):
         For given text try to fill the following template.
         If you dont find some info, create a follow up question for that sepcific info
         All output should be in json format.
-        Ask only questions related to date time, if you have them dont ask questions.
+        If you know the date and time, dont ask question.
         If you dont know the values, fill it as "TBD".
 
         TEXT: {text}
@@ -74,7 +74,7 @@ def get_event_info(text):
             "date": <YYYY-MM-DD>,
             "time": <time>,
             "relative_date": <relative_date>,
-            "summary: "Text Summary"
+            "summary: "Associated Text"
         }}
 
         For summary, try to write in third person without using names.
@@ -93,8 +93,6 @@ def get_issue_info(text):
         For given text try to fill the following template.
         If you dont find some info, create a follow up question for that sepcific info
         All output should be in json format.
-        Prefer asking questions over guessing answers to template.
-        If you dont know the values, fill it as "TBD"
 
         TEXT: {text}
 
@@ -151,6 +149,7 @@ def segregate_tasks(results):
                 print("Need to create a event")
                 info = get_event_info(res["para"])
                 get_user_approval(info)
+                continue
                 # Send a slack ping for this task
         if res["category"] in ISSUE_RELATED_CAT:
             print("Creating Github Issue")
@@ -200,8 +199,9 @@ if __name__ == "__main__":
     #     )
     # )
 
-    print(get_issue_info("And next week, we also have a conference coming up. \
-             So we need to talk to a few more customers. And we need to \
-             identify who the potential customers might be. So maybe let's sit \
-             on Monday and try to finalize who are the potential customers. \
-             And schedule calls with them."))
+    # print(get_issue_info("And next week, we also have a conference coming up. \
+    #          So we need to talk to a few more customers. And we need to \
+    #          identify who the potential customers might be. So maybe let's sit \
+    #          on Monday and try to finalize who are the potential customers. \
+    #          And schedule calls with them."))
+    pass

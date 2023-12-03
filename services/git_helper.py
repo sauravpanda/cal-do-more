@@ -10,7 +10,7 @@ repo = g.get_repo("Cloud-Code-AI/cal-do-more")
 
 
 def create_github_issue(issueTitle, description):
-    print(issueTitle, "desc", description)
+    # print(issueTitle, "desc", description)
     repo.create_issue(title=issueTitle,
                       body=description)
 
