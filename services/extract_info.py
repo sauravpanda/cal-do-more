@@ -20,7 +20,7 @@ def get_topics(text):
     """
     Idea is to get topics in a transcription and return them as a list of items.
     """
-    if type(text) != str:
+    if type(text) is not str:
         res = ""
         for item in text:
             res += f"{item['speaker']}: {item['speech']} \n"
