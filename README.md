@@ -55,3 +55,36 @@ You will need to provide your AWS S3 `bucket name`
 and `object key`. This will be used to access your video or audio file in store in the S3 location
 
 We currently support these file formats ```AMR,FLAC,M4A,MP3,MP4,Ogg,WebM,WAV```
+
+### Running the app
+
+Make sure your S3 bucket and lambda triggers are configured as necessary.
+
+Once you clone the repo
+```
+cd cal-do-more
+sudo docker-compose build
+sudo docker-compose up
+```
+
+Your api will start running on port 80 on the server and will be exposed to external users.
+
+### API docs
+
+```
+ENDPOINT: /cal/video/transcribe
+
+INPUT: {
+    "bucket_name": "",
+    "object_key": ""
+}
+```
+
+You need to configure your lambda to hit this endpoint on video upload triggers.
+
+## FUTURE WORK
+- Add authentication
+- Check for cal.com availability and provide prefer times.
+- Connect with daily video conferencing used by cal.
+- Add meeting analysis like time spent on different topics.
+- Automatically fetch the cal team and select the participants for the call.
