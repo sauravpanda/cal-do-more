@@ -51,4 +51,3 @@ if __name__ == "__main__":
     #     print(issue)
 
     print(close_github_issue(28))
-    
