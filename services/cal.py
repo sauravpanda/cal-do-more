@@ -45,8 +45,10 @@ def get_availablity(username, eventId, dateFrom, dateTo):
     return resp
 
 
-def create_booking(eventId, start, timeZone, attendees, metadata={}, language="en"):
+def create_booking(start, eventId=517882, desc="", attendees=None, timeZone="America/New_York", metadata={}, language="en"):
     url = BASE_URL + "bookings"
+    if not attendees:
+        attendees = {"name": "Saurav", "email": "sgp65@cornell.edu", "location": "Office"}
     resp = make_cal_call(
         url,
         {
@@ -56,6 +58,7 @@ def create_booking(eventId, start, timeZone, attendees, metadata={}, language="e
             "responses": attendees,
             "metadata": metadata,
             "language": language,
+            "description": desc
         },
         method="POST",
     )

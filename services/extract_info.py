@@ -1,6 +1,6 @@
 from services.llm import make_oai_call
-from services.slack_helper import get_user_approval
-
+from services.slack_helper import get_user_approval, get_user_approval_for_github
+import json
 CATEGORIES = [
     "Future Meeting",
     "Github Issues",
@@ -43,7 +43,7 @@ def check_if_cal_event_needed(text):
 
         TEXT: {text}
     """
-    res = make_oai_call(prompt)
+    res = json.loads(make_oai_call(prompt))
     return res
 
 
@@ -56,7 +56,7 @@ def check_github_issue_needed(text):
 
         TEXT: {text}
     """
-    res = make_oai_call(prompt)
+    res = json.loads(make_oai_call(prompt))
     return res
 
 
@@ -66,7 +66,7 @@ def get_event_info(text):
         If you dont find some info, create a follow up question for that sepcific info
         All output should be in json format.
         Prefer asking questions over guessing answers to template.
-        If you dont know the values, fill it as "TBD"
+        If you dont know the values, fill it as "TBD".
 
         TEXT: {text}
 
@@ -77,12 +77,14 @@ def get_event_info(text):
             "summary: "Text Summary"
         }}
 
+        For summary, try to write in third person without using names.
+
         Your output should look like:
         OUTPUT: {{"template_data": <TEMPLATE_DATA>, "question": "<question>"}}
 
 
     """
-    res = make_oai_call(prompt)
+    res = json.loads(make_oai_call(prompt))
     return res
 
 
@@ -104,7 +106,7 @@ def get_issue_info(text):
         Your output should look like:
         OUTPUT: {{"template_data": <TEMPLATE_DATA>}}
     """
-    res = make_oai_call(prompt)
+    res = json.loads(make_oai_call(prompt))
     return res
 
 
@@ -121,7 +123,7 @@ def get_topics(text):
     prompt = f"""
         For the given text below identify the topics being discussed in this meeting.
         Categorize the topics into one of the following: {CATEGORIES}
-        pass it as a list of dict in json format with the following format:
+        Give the output in json format as shown below:
         OUTPUT: {{
             "data": [
                 {{"topic": "TOPIC", "para":"para", "category": "category"}},
@@ -132,22 +134,29 @@ def get_topics(text):
         TEXT: {text}"""
 
     res = make_oai_call(prompt)
+    res = json.loads(res)
+    with open('output/topic_results.json', 'w+') as f:
+        f.write(json.dumps(res["data"]))
     return res["data"]
 
 
 def segregate_tasks(results):
     for res in results:
         if res["category"] in MEETING_RELATED_CAT:
+            print("Creating meeting")
             r = check_if_cal_event_needed(res["para"])
             if r["create_event"]:
+                print("Need to create a event")
                 info = get_event_info(res["para"])
                 get_user_approval(info)
+                continue
                 # Send a slack ping for this task
-        elif res["category"] in ISSUE_RELATED_CAT:
+        if res["category"] in ISSUE_RELATED_CAT:
+            print("Creating Github Issue")
             r = check_github_issue_needed(res["para"])
-            if r["create_event"]:
+            if r["create_issue"]:
                 info = get_issue_info(res["para"])
-                # get_user_approval(info)
+                get_user_approval_for_github(info)
 
 
 def cal_event():
