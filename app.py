@@ -3,6 +3,7 @@ import json
 from services.transcribe import transcribe_video, process_transcriptions
 from services.whisper import whisper_video
 from services.extract_info import get_topics
+from s3_lambda_setup import setup_s3_trigger
 
 app = Flask(__name__)
 
@@ -40,6 +41,6 @@ def slack_hook():
 def hello():
     return "Hello, World!"
 
-
 if __name__ == "__main__":
+    setup_s3_trigger()
     app.run(debug=True)
