@@ -62,11 +62,12 @@ def check_github_issue_needed(text):
 
 def get_event_info(text):
     prompt = f"""
-        For given text try to fill the following template.
-        If you dont find some info, create a follow up question for that sepcific info
-        All output should be in json format.
-        If you know the date and time, dont ask question.
-        If you dont know the values, fill it as "TBD".
+        For the given text, try to fill out the following template.
+        If you don't find some info, create a follow-up question for that specific info
+        All output should be in JSON format.
+        If you know the date and time, don't ask questions.
+        If it's a relative date, just get the close date; there is no need for the exact date.
+        If you don't know the values, fill it as "TBD".
 
         TEXT: {text}
 
@@ -90,9 +91,9 @@ def get_event_info(text):
 
 def get_issue_info(text):
     prompt = f"""
-        For given text try to fill the following template.
-        If you dont find some info, create a follow up question for that sepcific info
-        All output should be in json format.
+        For the given text, try to fill out the following template.
+        If you don't find some info, create a follow-up question for that specific info
+        All output should be in JSON format.
 
         TEXT: {text}
 
