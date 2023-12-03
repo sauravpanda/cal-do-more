@@ -3,15 +3,16 @@ import json
 from services.transcribe import transcribe_video, process_transcriptions
 from services.whisper import whisper_video
 from services.extract_info import get_topics
+
 app = Flask(__name__)
 
 
-@app.route('/cal/video/transcribe', methods = ['POST', 'GET'])
+@app.route("/cal/video/transcribe", methods=["POST", "GET"])
 def cal_transcribe():
-    if request.method == 'POST':
+    if request.method == "POST":
         print(request.json)
-        bucket_name = request.json['bucket_name']
-        object_key = request.json['object_key']
+        bucket_name = request.json["bucket_name"]
+        object_key = request.json["object_key"]
         transcription_data = transcribe_video(bucket_name, object_key)
         transcripts = process_transcriptions(transcription_data)
         results = get_topics(transcripts)
@@ -19,26 +20,26 @@ def cal_transcribe():
         return json.dumps(results)
 
 
-@app.route('/cal/video/whisper', methods = ['POST', 'GET'])
+@app.route("/cal/video/whisper", methods=["POST", "GET"])
 def cal_whisper():
-    if request.method == 'POST':
+    if request.method == "POST":
         print(request.json)
-        bucket_name = request.json['bucket_name']
-        object_key = request.json['object_key']
+        bucket_name = request.json["bucket_name"]
+        object_key = request.json["object_key"]
         results = whisper_video(bucket_name, object_key)
         return json.dumps(results)
 
 
-@app.route('/response')
+@app.route("/response")
 def slack_hook():
-    data = request.args.get('data')
-    return f'Button clicked! Value: {data}'
+    data = request.args.get("data")
+    return f"Button clicked! Value: {data}"
 
 
-@app.route('/')
+@app.route("/")
 def hello():
-    return 'Hello, World!'
+    return "Hello, World!"
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(debug=True)

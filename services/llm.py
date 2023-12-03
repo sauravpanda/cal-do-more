@@ -4,23 +4,27 @@ import os
 openai.api_key = os.environ["OPENAI_API_KEY"]
 
 client = openai.OpenAI(
-  organization=os.environ["OPENAI_ORG_ID"],
-
+    organization=os.environ["OPENAI_ORG_ID"],
 )
+
 
 def make_oai_call(prompt):
     completion = client.chat.completions.create(
         model="gpt-3.5-turbo-1106",
         temperature=0.4,
-        response_format={ "type": "json_object" },
+        response_format={"type": "json_object"},
         max_tokens=2000,
         messages=[
-            {"role": "system", "content": "You are a Meeting assistant which reviews the meeting notes and make actionable items and summaries."},
-            {"role": "user", "content": prompt}
+            {
+                "role": "system",
+                "content": "You are a Meeting assistant which reviews the meeting notes and make actionable items and summaries.",
+            },
+            {"role": "user", "content": prompt},
         ],
     )
 
     return completion.choices[0].message.content
+
 
 if __name__ == "__main__":
     prompt = "Whats the value of pi?"

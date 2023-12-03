@@ -21,18 +21,18 @@ payload = {
                     "text": "You open a new event",
                     "type": "button",
                     "value": "Create a new event",
-                    "url": "http://127.0.0.1:5000/response?data=yes"  # Replace with your actual URL
+                    "url": "http://127.0.0.1:5000/response?data=yes",  # Replace with your actual URL
                 },
                 {
                     "name": "answer",
                     "text": "Should take you from slack to browser",
                     "type": "button",
                     "value": "no",
-                    "url": "http://127.0.0.1:5000/response?data=no"
-                }
-            ]
+                    "url": "http://127.0.0.1:5000/response?data=no",
+                },
+            ],
         }
-    ]
+    ],
 }
 
 # Make the POST request to the Slack incoming webhook URL
@@ -43,4 +43,3 @@ if response.status_code == 200:
     print("Question sent successfully.")
 else:
     print(f"Error sending question to Slack: {response.status_code}, {response.text}")
-
