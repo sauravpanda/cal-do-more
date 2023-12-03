@@ -1,0 +1,4 @@
+[flake8]
+ignore = E402,F401,F541,BLK100
+exclude = .git,__pycache__,docs/source/conf.py,old,build,dist,.vscode,modules
+max-line-length = 150
