@@ -42,9 +42,7 @@ s3.put_bucket_notification_configuration(Bucket='osshackathon-audio', Notificati
 def call_video_transcription(payload):
     api_url = flask_url + "/cal/video/transcribe"
     response = requests.post(api_url, json=payload)
-    
     return {
         "statusCode": response.status_code,
         "body": json.dumps(response)
     }
-
