@@ -82,13 +82,13 @@ def get_user_approval(info):
         ctx = CONTEXT_PL
         ctx["text"]["text"] = ctx["text"]["text"].format(
             text=td["summary"],
-            dt= info["question"] + "?"
+            dt=info["question"] + "?"
         )
         setup = SETUP_EVENT.replace('{username}', os.environ["CAL_USERNAME"])
         pl = {"blocks": [ctx, json.loads(setup)]}
         print(json.dumps(pl))
         send_webhook(pl)
-        
+
     else:
         # Ask for approval
         td = info["template_data"]

@@ -150,7 +150,6 @@ def segregate_tasks(results):
                 # get_user_approval(info)
 
 
-
 def cal_event():
     pass
 
