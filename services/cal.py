@@ -49,7 +49,6 @@ def create_booking(eventId, start, timeZone, attendees, metadata={}, language='e
         "language": language
     }, method="POST")
     return resp
-    
 
 
 if __name__ == "__main__":
