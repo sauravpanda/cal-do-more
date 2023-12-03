@@ -128,3 +128,4 @@ This will be necessary to hit the transcription endpoint on video upload trigger
 - Connect with daily video conferencing used by cal.
 - Add meeting analysis like time spent on different topics.
 - Automatically fetch the cal team and select the participants for the call.
+- Synchronize slack assistant events to avoid duplication actions
