@@ -45,7 +45,7 @@ def slack_hook():
     eventType = request.args.get("type")
     if data == "yes" and eventType == "issue":
         title = request.args.get("title")
-        desc = request.args.get("")
+        desc = request.args.get("desc", "")
         create_github_issue(title, desc)
         RESP = "Added Github Issue"
         print(title, desc)

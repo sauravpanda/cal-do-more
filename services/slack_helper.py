@@ -171,23 +171,4 @@ if __name__ == "__main__":
         "question": "",
     }
 
-    # dl = {
-    #     "template_data": {
-    #         "title": "New Issue",
-    #         "description": "This is a new issue test",
-    #     },
-    # }
-
-    # temp_pl = []
-    # ctx = CONTEXT_PL
-    # td = dl["template_data"]
     get_user_approval(dl)
-    # get_user_approval_for_github(dl)
-
-    # dt = dateparser.parse(dt_str, languages=["en"])
-    # ctx["text"]["text"] = ctx["text"]["text"].format(
-    #     text=td["summary"], dt=dt.strftime("%Y-%m-%dT%H:%M:%S.000Z")
-    # )
-    # pl = {"blocks": [ctx, YES_NO_PL]}
-    # send_webhook(pl)
-    # send_webhook(pl)

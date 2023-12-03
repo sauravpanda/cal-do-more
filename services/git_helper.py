@@ -9,11 +9,10 @@ g = Github(auth=auth)
 repo = g.get_repo("Cloud-Code-AI/cal-do-more")
 
 
-def create_github_issue(issueTitle, description, labels, assignee):
+def create_github_issue(issueTitle, description):
+    print(issueTitle, "desc", description)
     repo.create_issue(title=issueTitle,
-                      body=description,
-                      labels=labels,
-                      assignee=assignee)
+                      body=description)
 
     return "Issue Created"
 
