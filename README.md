@@ -130,3 +130,4 @@ This will be necessary to hit the transcription endpoint on video upload trigger
 - Add meeting analysis like time spent on different topics.
 - Add support to whisper for people who dont want to work with aws transcript
 - Automatically fetch the cal team and select the participants for the call.
+- Synchronize slack assistant events to avoid duplication actions
