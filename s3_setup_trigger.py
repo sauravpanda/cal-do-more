@@ -32,4 +32,3 @@ def setup_s3_trigger():
     }
 
     s3.put_bucket_notification_configuration(Bucket='osshackathon-audio', NotificationConfiguration=s3_event_configuration)
-    
