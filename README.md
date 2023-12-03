@@ -83,8 +83,10 @@ INPUT: {
 You need to configure your lambda to hit this endpoint on video upload triggers.
 
 ## FUTURE WORK
+- Make Prompts more focused to get exact events and ensure we dont miss info
 - Add authentication
 - Check for cal.com availability and provide prefer times.
 - Connect with daily video conferencing used by cal.
 - Add meeting analysis like time spent on different topics.
+- Add support to whisper for people who dont want to work with aws transcript
 - Automatically fetch the cal team and select the participants for the call.

@@ -14,7 +14,7 @@ app = Flask(__name__)
 def cal_transcribe():
     RESP = "Unknown method"
     if request.method == "POST":
-        print(request.json)
+        # print(request.json)
         try:
             bucket_name = request.json["bucket_name"]
             object_key = request.json["object_key"]
@@ -32,7 +32,7 @@ def cal_transcribe():
 @app.route("/cal/video/whisper", methods=["POST", "GET"])
 def cal_whisper():
     if request.method == "POST":
-        print(request.json)
+        # print(request.json)
         bucket_name = request.json["bucket_name"]
         object_key = request.json["object_key"]
         results = whisper_video(bucket_name, object_key)
@@ -49,7 +49,7 @@ def slack_hook():
         desc = request.args.get("desc", "")
         create_github_issue(title, desc)
         RESP = "Added Github Issue"
-        print(title, desc)
+        # print(title, desc)
     elif data == "yes" and eventType == "event":
         summary = request.args.get("summary", "")
         dt = request.args.get("time")
