@@ -1,6 +1,7 @@
 import os
 import boto3
 
+
 def setup_s3_trigger():
     s3 = boto3.client('s3')
     lambda_client = boto3.client('lambda')
@@ -31,3 +32,4 @@ def setup_s3_trigger():
     }
 
     s3.put_bucket_notification_configuration(Bucket='osshackathon-audio', NotificationConfiguration=s3_event_configuration)
+    
