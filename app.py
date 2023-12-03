@@ -2,6 +2,7 @@ from flask import Flask, request
 import json
 from services.transcribe import transcribe_video, process_transcriptions
 from services.whisper import whisper_video
+from services.extract_info import get_topics
 app = Flask(__name__)
 
 
@@ -12,9 +13,12 @@ def cal_transcribe():
         bucket_name = request.json['bucket_name']
         object_key = request.json['object_key']
         transcription_data = transcribe_video(bucket_name, object_key)
-        results = process_transcriptions(transcription_data)
+        transcripts = process_transcriptions(transcription_data)
+        results = get_topics(transcripts)
+
         return json.dumps(results)
-    
+
+
 @app.route('/cal/video/whisper', methods = ['POST', 'GET'])
 def cal_whisper():
     if request.method == 'POST':

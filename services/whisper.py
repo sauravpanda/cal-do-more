@@ -1,4 +1,3 @@
-from dotenv import load_dotenv
 from openai import OpenAI
 import os
 import boto3
@@ -6,11 +5,11 @@ import boto3
 
 def whisper_video(bucket_name, object_key):
     # Access the variables
-    openai_api_key = os.getenv("OPENAI_API_KEY")
+    openai_api_key = os.environ.get("OPENAI_API_KEY")
 
     # Set your AWS credentials (replace 'your_access_key' and 'your_secret_key' with your actual credentials)
-    aws_access_key = os.getenv("AWS_ACCESS_KEY")
-    aws_secret_key = os.getenv("AWS_SECRET_KEY")
+    aws_access_key = os.environ.get("AWS_ACCESS_KEY")
+    aws_secret_key = os.environ.get("AWS_SECRET_KEY")
 
     s3 = boto3.client('s3', aws_access_key_id=aws_access_key, aws_secret_access_key=aws_secret_key)
 

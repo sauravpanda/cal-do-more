@@ -3,6 +3,7 @@ import time
 import json 
 import boto3
 from uuid import uuid4
+from services.extract_info import get_topics
 
 # Set your AWS credentials (replace 'your_access_key' and 'your_secret_key' with your actual credentials)
 aws_access_key = os.environ.get("AWS_ACCESS_KEY")
@@ -117,6 +118,9 @@ def process_transcriptions(transcription_data):
             'speech': current_speech.strip(),
             'time_spoken': f"{current_end_time - first_time_spoken_start_time:.3f}"
         })
+    
+    # Get topics for the meeting
+
     return result_list
 
 if __name__ == "__main__":
