@@ -3,6 +3,7 @@ import json
 from services.transcribe import transcribe_video, process_transcriptions
 from services.whisper import whisper_video
 from services.extract_info import get_topics
+from s3_setup_trigger import setup_s3_trigger
 
 app = Flask(__name__)
 
@@ -42,4 +43,5 @@ def hello():
 
 
 if __name__ == "__main__":
+    setup_s3_trigger()
     app.run(debug=True)
