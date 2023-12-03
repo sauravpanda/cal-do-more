@@ -1,16 +1,22 @@
 # cal-do-more
-A Video transcription service for Cal.com meetings
+A personal AI Meeting assistant to schedule meetings and tasks based on video conversation. Ensures you dont miss out the task due to long meetings.
 
 ### The Idea:
 
-We take the video, transcribe it, and then process it for potential actions
+Once a video conferencing ends, Cal stores the video files in S3 bucket.
+From here:
+- S3 buckets triggers cal-do-more to process the video
+- Cal-do-more transcribes the video and parses them into topics discussed in the call
+- It also identifies what are action tasks like Scheduling meeting and Creating a task on github or CRM.
+- Before creating a event it pings on slack to get user authorization and missing info in case more information is needed.
+- Once approved it can directly create bookings or github issues for you.
 
-We use the transcription to identify potential tasks, summaries, and takeaways.
-
-Add follow-up to the discussion.
-
-Add to-do list schedule.
-
+### Tech Stack
+- Python
+- OpenAI
+- AWS transcribe
+- AWS EC2
+- Docker
 
 ### Getting started 
 
@@ -21,11 +27,19 @@ Start by running `cp .env.example .env`
 You will need the following enironment variables to run the code:
 
 ```
-OPENAI_ORG_ID=
+CAL_API_KEY=
+CAL_API_URL='https://api.cal.com/v1/'
+ACCESS_TOKEN=
 OPENAI_API_KEY=
+OPENAI_ORG_ID=
+FLASK_URL=
 AWS_ACCESS_KEY=
 AWS_SECRET_KEY=
 SLACK_HOOK=
+SLACK_MEETING_ANALYTICS_HOOK=
+CAL_USERNAME=
+GITHUB_PAT_TOKEN=
+PYTHONPATH=.
 ```
 
 You can find your OPENAI keys [here](https://platform.openai.com/api-keys)

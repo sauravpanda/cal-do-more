@@ -65,7 +65,7 @@ def get_event_info(text):
         For given text try to fill the following template.
         If you dont find some info, create a follow up question for that sepcific info
         All output should be in json format.
-        Prefer asking questions over guessing answers to template.
+        Ask only questions related to date time, if you have them dont ask questions.
         If you dont know the values, fill it as "TBD".
 
         TEXT: {text}
@@ -151,7 +151,6 @@ def segregate_tasks(results):
                 print("Need to create a event")
                 info = get_event_info(res["para"])
                 get_user_approval(info)
-                continue
                 # Send a slack ping for this task
         if res["category"] in ISSUE_RELATED_CAT:
             print("Creating Github Issue")
