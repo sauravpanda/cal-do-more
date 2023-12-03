@@ -17,7 +17,7 @@ def cal_transcribe():
         transcripts = process_transcriptions(transcription_data)
         results = get_topics(transcripts)
 
-        return json.dumps(results)
+        return results
 
 
 @app.route("/cal/video/whisper", methods=["POST", "GET"])

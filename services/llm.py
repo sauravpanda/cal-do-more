@@ -11,7 +11,7 @@ client = openai.OpenAI(
 def make_oai_call(prompt):
     completion = client.chat.completions.create(
         model="gpt-3.5-turbo-1106",
-        temperature=0.4,
+        temperature=0.5,
         response_format={"type": "json_object"},
         max_tokens=2000,
         messages=[
