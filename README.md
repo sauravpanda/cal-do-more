@@ -38,4 +38,6 @@ You can create your own slack webhook following [this link](https://api.slack.co
 Once you have the environment variables, you can run the code by running `python main.py`
 
 You will need to provide your AWS S3 `bucket name`
-and `object key`. This will be used to access your audio file in store in the S3 location
+and `object key`. This will be used to access your video or audio file in store in the S3 location
+
+We currently support these file formats ```AMR,FLAC,M4A,MP3,MP4,Ogg,WebM,WAV```
