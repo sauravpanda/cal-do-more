@@ -1,22 +1,18 @@
 from github import Github
 from github import Auth
 import os
-from dotenv import load_dotenv
 
-load_dotenv()
-
-access_token = os.environ.get("ACCESS_TOKEN")
+access_token = os.environ.get("GITHUB_PAT_TOKEN")
 auth = Auth.Token(access_token)
 
 g = Github(auth=auth)
 repo = g.get_repo("Cloud-Code-AI/cal-do-more")
 
 
-def create_github_issue(issueTitle, description, labels, assignee):
+def create_github_issue(issueTitle, description):
+    print(issueTitle, "desc", description)
     repo.create_issue(title=issueTitle,
-                      body=description,
-                      labels=labels,
-                      assignee=assignee)
+                      body=description)
 
     return "Issue Created"
 

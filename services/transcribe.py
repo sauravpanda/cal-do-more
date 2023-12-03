@@ -49,14 +49,10 @@ def transcribe_video(bucket_name, object_key):
         time.sleep(10)  # Wait for 30 seconds before checking again
 
     if status == "COMPLETED":
-        # Get the transcription job results
-        # transcription_results_uri = response["TranscriptionJob"]["Transcript"][
-        #     "TranscriptFileUri"
-        # ]
-        # object_key = transcribe_job_name + ".json"
+        out_object_key = transcribe_job_name + ".json"
 
         # Download and print the transcription results
-        transcription_results = s3.get_object(Bucket=output_json_bucket, Key=object_key)
+        transcription_results = s3.get_object(Bucket=output_json_bucket, Key=out_object_key)
         transcription_text = transcription_results["Body"].read().decode("utf-8")
         print("Transcription Results:\n", transcription_text, "\n")
     else:

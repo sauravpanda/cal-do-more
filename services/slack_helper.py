@@ -7,29 +7,57 @@ CONTEXT_PL = {
     "type": "section",
     "text": {
         "type": "mrkdwn",
-        "text": "**Potential Meeting:** \n Desc: {text} \n {dt}",
+        "text": "*Found Potential Meeting:* \n\n *Summary:* {text} \n\n {dt}",
     },
 }
 
-CREATE_EVENT_PL = {
+GITHUB_CONTEXT_PL = {
+    "type": "section",
+    "text": {
+        "type": "mrkdwn",
+        "text": "*Creating Github Issue:* \n\n *Desc:* {text} \n\n {dt}",
+    },
+}
+
+CREATE_EVENT_PL = '''{
     "type": "actions",
     "elements": [
         {
             "type": "button",
-            "text": {"type": "plain_text", "text": "Create Event", "emoji": True},
+            "text": {"type": "plain_text", "text": "Create Event", "emoji": true},
             "value": "yes",
-            "url": "http://127.0.0.1:5000/response?data=yes",
-            "action_id": "actionId-0",
+            "url": "http://127.0.0.1:5000/response?data=yes&type=event&{pl_data}",
+            "action_id": "actionId-0"
         },
         {
             "type": "button",
-            "text": {"type": "plain_text", "text": "No Need", "emoji": True},
+            "text": {"type": "plain_text", "text": "No Need", "emoji": true},
             "value": "no",
-            "url": "http://127.0.0.1:5000/response?data=no",
-            "action_id": "actionId-2",
+            "url": "http://127.0.0.1:5000/response?data=no&type=event&{pl_data}",
+            "action_id": "actionId-2"
+        }
+    ]
+}'''
+
+CREATE_ISSUE_PL = '''{
+    "type": "actions",
+    "elements": [
+        {
+            "type": "button",
+            "text": {"type": "plain_text", "text": "Create", "emoji": true},
+            "value": "yes",
+            "url": "http://127.0.0.1:5000/response?data=yes&type=issue&{pl_data}",
+            "action_id": "actionId-0"
         },
-    ],
-}
+        {
+            "type": "button",
+            "text": {"type": "plain_text", "text": "No Need", "emoji": true},
+            "value": "no",
+            "url": "http://127.0.0.1:5000/response?data=no&type=issue&{pl_data}",
+            "action_id": "actionId-2"
+        }
+    ]
+}'''
 
 SETUP_EVENT = '''{
     "type": "actions",
@@ -99,8 +127,27 @@ def get_user_approval(info):
             text=td["summary"],
             dt="When: " + dt.strftime("%Y-%m-%dT%H:%M:%S.000Z")
         )
-        pl = {"blocks": [ctx, CREATE_EVENT_PL]}
+        pl_event = CREATE_EVENT_PL.replace(
+            "{pl_data}",
+            f"time={dt.strftime('%Y-%m-%dT%H:%M:%S.000Z')}&summary={requests.utils.quote(td['summary'])}")
+        pl = {"blocks": [ctx, json.loads(pl_event)]}
+        print(json.dumps(pl))
         send_webhook(pl)
+
+
+def get_user_approval_for_github(info):
+    # Ask a question to user
+    td = info["template_data"]
+    ctx = GITHUB_CONTEXT_PL
+    ctx["text"]["text"] = ctx["text"]["text"].format(
+        text=td["title"],
+        dt=td["description"]
+    )
+    setup = CREATE_ISSUE_PL.replace(
+        '{pl_data}',
+        f'title={requests.utils.quote(td["title"])}&desc={requests.utils.quote(td["description"])}')
+    pl = {"blocks": [ctx, json.loads(setup)]}
+    send_webhook(pl)
 
 
 if __name__ == "__main__":
@@ -114,25 +161,14 @@ if __name__ == "__main__":
         "question": "What is the specific date and time for the meeting next week to finalize potential customers?",
     }
 
-    # dl = {
-    #     "template_data": {
-    #         "date": "TBD",
-    #         "time": "10:00 am",
-    #         "relative_date": "Monday",
-    #         "summary": "Identify potential customers and schedule calls with them",
-    #     },
-    #     "question": "",
-    # }
+    dl = {
+        "template_data": {
+            "date": "TBD",
+            "time": "10:00 am",
+            "relative_date": "Monday",
+            "summary": "Identify potential customers and schedule calls with them",
+        },
+        "question": "",
+    }
 
-    # temp_pl = []
-    # ctx = CONTEXT_PL
-    # td = dl["template_data"]
     get_user_approval(dl)
-
-    # dt = dateparser.parse(dt_str, languages=["en"])
-    # ctx["text"]["text"] = ctx["text"]["text"].format(
-    #     text=td["summary"], dt=dt.strftime("%Y-%m-%dT%H:%M:%S.000Z")
-    # )
-    # pl = {"blocks": [ctx, YES_NO_PL]}
-    # send_webhook(pl)
-    # send_webhook(pl)
