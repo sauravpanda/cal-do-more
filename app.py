@@ -6,6 +6,7 @@ from services.extract_info import get_topics, segregate_tasks
 from services.cal import create_booking
 from services.git_helper import create_github_issue
 import traceback
+
 app = Flask(__name__)
 
 
