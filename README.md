@@ -131,3 +131,9 @@ This will be necessary to hit the transcription endpoint on video upload trigger
 - Add support to whisper for people who dont want to work with aws transcript
 - Automatically fetch the cal team and select the participants for the call.
 - Synchronize slack assistant events to avoid duplication actions
+
+### Screenshot
+
+<img width="1728" alt="Screenshot 2023-12-03 at 3 12 01 PM" src="https://github.com/Cloud-Code-AI/cal-do-more/assets/12201824/1addccfe-ec3b-4aed-8015-bd7e85eece47">
+<img width="1728" alt="Screenshot 2023-12-03 at 3 12 09 PM" src="https://github.com/Cloud-Code-AI/cal-do-more/assets/12201824/7db808f1-9f69-43ba-a884-6555e21e5454">
+![Screenshot 2023-12-03 at 3 12 49 PM](https://github.com/Cloud-Code-AI/cal-do-more/assets/12201824/995c67b4-b2a7-499a-8d56-2ebf2d008479)
