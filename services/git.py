@@ -8,7 +8,7 @@ load_dotenv()
 access_token = os.environ.get("ACCESS_TOKEN")
 auth = Auth.Token(access_token)
 
-g = Github(auth = auth)
+g = Github(auth=auth)
 repo = g.get_repo("Cloud-Code-AI/cal-do-more")
 
 
@@ -20,13 +20,14 @@ def create_github_issue(issueTitle, description, labels, assignee):
 
     return "Issue Created"
 
+
 def get_github_issue(number):
     issue = repo.get_issue(number)
     return issue
 
 
 def get_all_open_github_issues():
-    open_issues = repo.get_issues(state = 'open')
+    open_issues = repo.get_issues(state='open')
     return open_issues
 
 
@@ -34,6 +35,7 @@ def close_github_issue(number):
     issue = get_github_issue(number)
     issue.edit(state='closed')
     return "Issue Closed"
+
 
 if __name__ == "__main__":
     # print(create_github_issue(
