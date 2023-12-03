@@ -11,6 +11,7 @@ auth = Auth.Token(access_token)
 g = Github(auth = auth)
 repo = g.get_repo("Cloud-Code-AI/cal-do-more")
 
+
 def create_github_issue(issueTitle, description, labels, assignee):
     repo.create_issue(title=issueTitle,
                       body=description,
@@ -23,9 +24,11 @@ def get_github_issue(number):
     issue = repo.get_issue(number)
     return issue
 
+
 def get_all_open_github_issues():
     open_issues = repo.get_issues(state = 'open')
     return open_issues
+
 
 def close_github_issue(number):
     issue = get_github_issue(number)
