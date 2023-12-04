@@ -113,9 +113,10 @@ def get_user_approval(info):
             dt=info["question"] + "?"
         )
         setup = SETUP_EVENT.replace('{username}', os.environ["CAL_USERNAME"])
-        setup = setup.replace("{host}", os.environ.get("HOST_URL", "http://localhost:5000"))
+        setup = setup.replace("{host}", os.environ.get("{host}", "http://localhost:5000"))
         pl = {"blocks": [ctx, json.loads(setup)]}
-        # print(json.dumps(pl))
+
+        print("Slack block: \n",json.dumps(pl))
         send_webhook(pl)
 
     else:
@@ -131,9 +132,9 @@ def get_user_approval(info):
         pl_event = CREATE_EVENT_PL.replace(
             "{pl_data}",
             f"time={dt.strftime('%Y-%m-%dT%H:%M:%S.000Z')}&summary={requests.utils.quote(td['summary'])}")
-        pl_event = pl_event.replace("{host}", os.environ.get("HOST_URL", "http://localhost:5000"))
+        pl_event = pl_event.replace("{host}", os.environ.get("{host}", "http://localhost:5000"))
         pl = {"blocks": [ctx, json.loads(pl_event)]}
-        # print(json.dumps(pl))
+        print("Slack block: \n",json.dumps(pl))
         send_webhook(pl)
 
 
@@ -149,6 +150,7 @@ def get_user_approval_for_github(info):
         '{pl_data}',
         f'title={requests.utils.quote(td["title"])}&desc={requests.utils.quote(td["description"])}')
     pl = {"blocks": [ctx, json.loads(setup)]}
+    print("Slack:", )
     send_webhook(pl)
 
 
