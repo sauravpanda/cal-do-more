@@ -116,7 +116,7 @@ def get_user_approval(info):
         setup = setup.replace("{host}", os.environ.get("{host}", "http://localhost:5000"))
         pl = {"blocks": [ctx, json.loads(setup)]}
 
-        print("Slack block: \n",json.dumps(pl))
+        print("Slack block: \n", json.dumps(pl))
         send_webhook(pl)
 
     else:
@@ -134,7 +134,7 @@ def get_user_approval(info):
             f"time={dt.strftime('%Y-%m-%dT%H:%M:%S.000Z')}&summary={requests.utils.quote(td['summary'])}")
         pl_event = pl_event.replace("{host}", os.environ.get("{host}", "http://localhost:5000"))
         pl = {"blocks": [ctx, json.loads(pl_event)]}
-        print("Slack block: \n",json.dumps(pl))
+        print("Slack block: \n", json.dumps(pl))
         send_webhook(pl)
 
 
