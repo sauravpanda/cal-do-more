@@ -1,6 +1,14 @@
 # cal-do-more
 A personal AI Meeting assistant to schedule meetings and tasks based on video conversation. Ensures you dont miss out the task due to long meetings.
 
+## Demo 
+
+
+
+https://github.com/Cloud-Code-AI/cal-do-more/assets/30855394/08108b46-7153-4b71-9dc6-66a87c8d012d
+
+
+
 ### The Idea:
 
 Once a video conferencing ends, Cal stores the video files in S3 bucket.
